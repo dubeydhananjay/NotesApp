@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.notesapp.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
@@ -18,6 +19,14 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+
+        binding.btnSignUp.setOnClickListener {
+            findNavController().navigate((R.id.action_registerFragment_to_mainFragment))
+        }
+
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment2)
+        }
         return binding.root
     }
 

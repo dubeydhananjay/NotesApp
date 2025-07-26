@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.navigationSafeargs)
 }
+hilt {
+    enableAggregatingTask = false
+}
 
 android {
     namespace = "com.example.notesapp"
@@ -64,9 +67,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.navigation.compose)
-    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.spinKit)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
