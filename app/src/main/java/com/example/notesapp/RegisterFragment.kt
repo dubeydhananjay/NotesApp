@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.databinding.FragmentRegisterBinding
+import com.example.notesapp.model.UserRequest
 import com.example.notesapp.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,18 +28,31 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-        binding.btnSignUp.setOnClickListener {
-            //findNavController().navigate((R.id.action_registerFragment_to_mainFragment))
-        }
 
-        binding.btnLogin.setOnClickListener {
-            //findNavController().navigate(R.id.action_registerFragment_to_loginFragment2)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnSignUp.setOnClickListener {
+            val validationRes = validateUserInput()
+            if(validationRes.first) {
+                authViewModel.registerUser(getUserRequest())
+            }
+            else {
+                binding.txtError.text = validationRes.second
+            }
+
+        }
+
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment2)
+        }
+        bindObservers()
+
+    }
+
+    private fun bindObservers() {
         authViewModel.userResponseLiveData.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = false
             when (it) {
@@ -56,6 +70,18 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun getUserRequest(): UserRequest {
+        val username = binding.txtUsername.text.toString()
+        val email = binding.txtEmail.text.toString()
+        val password = binding.txtPassword.text.toString()
+        return UserRequest(email, password, username)
+    }
+
+    private fun validateUserInput(): Pair<Boolean, String> {
+        val userRequest = getUserRequest()
+        return authViewModel.validateCredentials(userRequest.username, userRequest.email, userRequest.password, false)
     }
 
     override fun onDestroyView() {
