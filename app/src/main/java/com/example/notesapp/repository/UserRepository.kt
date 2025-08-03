@@ -2,7 +2,7 @@ package com.example.notesapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.notesapp.api.UserApi
+import com.example.notesapp.api.UserAPI
 import com.example.notesapp.model.UserRequest
 import com.example.notesapp.model.UserResponse
 import com.example.notesapp.utils.NetworkResult
@@ -11,7 +11,7 @@ import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(private val userApi: UserApi) {
+class UserRepository @Inject constructor(private val userApi: UserAPI) {
 
     private val _userRepositoryLiveData = MutableLiveData<NetworkResult<UserResponse>>()
     val userRepositoryLiveData : LiveData<NetworkResult<UserResponse>>

@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Body
 
-interface UserApi {
+interface UserAPI {
 
     @POST("/users/signup")
     suspend fun signup(@Body userRequest: UserRequest) : Response<UserResponse>
