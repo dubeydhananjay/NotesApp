@@ -12,13 +12,18 @@ import com.example.notesapp.databinding.FragmentLogin2Binding
 import com.example.notesapp.databinding.FragmentRegisterBinding
 import com.example.notesapp.model.UserRequest
 import com.example.notesapp.utils.NetworkResult
+import com.example.notesapp.utils.TokenManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment2 : Fragment() {
     private var _binding: FragmentLogin2Binding? = null
     private val binding get() = _binding!!
     private val authViewModel by viewModels<AuthViewModel>()
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +64,7 @@ class LoginFragment2 : Fragment() {
                     binding.progressBar.isVisible = true
                 }
                 is NetworkResult.Success<*> -> {
+                    tokenManager.saveToken(it.data!!.token)
                     findNavController().navigate(R.id.action_loginFragment2_to_mainFragment)
                 }
             }
