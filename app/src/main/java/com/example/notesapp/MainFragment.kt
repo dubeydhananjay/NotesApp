@@ -41,6 +41,9 @@ class MainFragment : Fragment() {
         notesViewModel.getAllNotes()
         binding.noteList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.noteList.adapter = notesAdapter
+        binding.addNote.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_noteFragment)
+        }
     }
 
     private fun bindObservers() {

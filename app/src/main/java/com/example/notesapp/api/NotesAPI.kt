@@ -12,15 +12,15 @@ import retrofit2.http.Path
 
 interface NotesAPI {
 
-    @GET("/note")
+    @GET("/notes")
     suspend fun getNotes(): Response<List<NotesResponse>>
 
-    @POST("/note")
+    @POST("/notes")
     suspend fun postNote(@Body notesRequest: NotesRequest): Response<NotesResponse>
 
-    @PUT("/note/{noteId}")
+    @PUT("/notes/{noteId}")
     suspend fun updateNote(@Path("noteId") noteId: String, @Body notesRequest: NotesRequest): Response<NotesResponse>
 
-    @DELETE("/note/{noteId}")
+    @DELETE("/notes/{noteId}")
     suspend fun deleteNote(@Path("noteId") noteId: String): Response<NotesResponse>
 }

@@ -1,10 +1,10 @@
 package com.example.notesapp.model
 
 data class NotesResponse(
-    val v: Int,
-    val id: String,
+    val __v: Int,
+    val _id: String,
     val createdAt: String,
-    val description: String,
+    val desc: String,
     val title: String,
     val updatedAt: String,
     val userId: String

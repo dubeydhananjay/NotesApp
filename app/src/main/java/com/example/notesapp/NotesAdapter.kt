@@ -27,7 +27,7 @@ class NotesAdapter(private val onNoteClicked: (NotesResponse) -> Unit):
    RecyclerView.ViewHolder(binding.root) {
        fun bind(note: NotesResponse) {
            binding.title.text = note.title
-           binding.desc.text = note.description
+           binding.desc.text = note.desc
            binding.root.setOnClickListener {
                onNoteClicked(note)
            }
@@ -35,7 +35,7 @@ class NotesAdapter(private val onNoteClicked: (NotesResponse) -> Unit):
     }
     class ComparatorDiffUtil : DiffUtil.ItemCallback<NotesResponse>() {
         override fun areItemsTheSame(oldItem: NotesResponse, newItem: NotesResponse): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem._id == newItem._id
         }
 
         override fun areContentsTheSame(oldItem: NotesResponse, newItem: NotesResponse

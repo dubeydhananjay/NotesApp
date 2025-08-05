@@ -1,5 +1,6 @@
 package com.example.notesapp.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.notesapp.api.NotesAPI
@@ -22,17 +23,16 @@ class NotesRepository @Inject constructor(private val notesAPI: NotesAPI) {
     suspend fun getNotes() {
         _notesLiveData.postValue(NetworkResult.Loading())
         val response = notesAPI.getNotes()
-        if(response.isSuccessful && response.body() != null) {
+        if (response.isSuccessful && response.body() != null) {
             _notesLiveData.postValue(NetworkResult.Success(response.body()!!))
-        }
-        else if(response.errorBody() != null) {
+        } else if (response.errorBody() != null) {
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            _notesLiveData.postValue(NetworkResult.Error(null, errorObj.getString("message")))
-        }
-        else {
-            _notesLiveData.postValue(NetworkResult.Error(null, "Something went wrong"))
+            _notesLiveData.postValue(NetworkResult.Error(null,errorObj.getString("message")))
+        } else {
+            _notesLiveData.postValue(NetworkResult.Error(null,"Something Went Wrong"))
         }
     }
+
 
     suspend fun createNote(notesRequest: NotesRequest) {
         _statusLiveData.postValue(NetworkResult.Loading())
